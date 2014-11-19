@@ -29,17 +29,48 @@ namespace WindowsFormsApplication1
 
         private void button3_Click(object sender, EventArgs e)
         {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
+            saveFileDialog1.Filter = "Project File (.yolo)|*.yolo|Template File (.tmpl)|*.tmpl|All Files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 1;
+
+            saveFileDialog1.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
+            openFileDialog1.Filter = "Project File (.yolo)|*.yolo|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.ShowDialog();
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            if (textBox1.Text.Length > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Do you want to save your current program?", "Confirmation", MessageBoxButtons.YesNoCancel);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
+                    saveFileDialog1.Filter = "Project File (.yolo)|*.yolo|All Files (*.*)|*.*";
+                    saveFileDialog1.FilterIndex = 1;
+
+                    saveFileDialog1.ShowDialog();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    textBox1.Clear();
+                }
+                else
+                {
+                    //
+                }
+            }
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -54,7 +85,31 @@ namespace WindowsFormsApplication1
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            if (textBox1.Text.Length > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Do you want to save your current program?", "Confirmation", MessageBoxButtons.YesNoCancel);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+                    saveFileDialog1.Filter = "Project File (.yolo)|*.yolo|All Files (*.*)|*.*";
+                    saveFileDialog1.FilterIndex = 1;
+
+                    saveFileDialog1.ShowDialog();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    textBox1.Clear();
+                }
+                else if (dialogResult == DialogResult.Cancel)
+                {
+                    // Do nothing.
+                }
+                else
+                {
+                    textBox1.Clear();
+                }
+            }
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -148,6 +203,15 @@ namespace WindowsFormsApplication1
 
         }
 
+        private void textBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                // your stuff
+            }
+            e.Handled = true;
+        }
+
         private void openProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -179,7 +243,7 @@ namespace WindowsFormsApplication1
                 }
                 else
                 {
-                    //
+                    // Do nothing.
                 } 
             }
         }
@@ -188,7 +252,7 @@ namespace WindowsFormsApplication1
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            openFileDialog1.Filter = "Project File (.tmpl)|*.tmpl|All Files (*.*)|*.*";
+            openFileDialog1.Filter = "Template File (.tmpl)|*.tmpl|All Files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
 
             openFileDialog1.Multiselect = false;
@@ -204,6 +268,45 @@ namespace WindowsFormsApplication1
         {
             MessageBox.Show("Graphical IDE.\n Developed by: \n Corey Fischels \n April Kroll \n Matt Lockard \n Blake Mackey \n Joshua Marlow"+
                 "\n\n (c) Copyright 2014. All rights reserved.", "About", MessageBoxButtons.OK);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.Filter = "Template File (.tmpl)|*.tmpl|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.ShowDialog();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "Project File (.yolo)|*.yolo|All Files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 1;
+
+            saveFileDialog1.ShowDialog();
+        }
+
+        private void saveTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "Template File (.tmpl)|*.tmpl|All Files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 1;
+
+            saveFileDialog1.ShowDialog();
+
+            // Program sometimes locks up if attempting to Save a file as a project then
+            // clicking Cancel then Saving a file as a template then clicking cancel.
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+                textBox1.SelectAll();      
         }
 
     }
